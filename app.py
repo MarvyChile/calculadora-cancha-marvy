@@ -51,6 +51,36 @@ caucho_std = round(area_total * 7, 1)
 arena_fifa = round(area_total * 12, 1)
 caucho_fifa = round(area_total * 14, 1)
 
+# Mostrar resultados
+st.subheader("Resumen de Cálculo de Materiales")
+
+col1, col2 = st.columns(2)
+
+with col1:
+    st.markdown(f"**Área útil:** {area_util:.1f} m²")
+    st.markdown(f"**Área total:** {area_total:.1f} m²")
+    st.markdown(f"**Pasto blanco requerido:** {pasto_blanco:.1f} m²")
+    st.markdown(f"**Rollos blancos (2x42):** {rollos_blanco} rollos")
+    st.markdown(f"**Corte adicional blanco:** {corte_blanco}")
+
+with col2:
+    st.markdown(f"**Pasto verde requerido:** {pasto_verde:.1f} m²")
+    st.markdown(f"**Rollos verdes (4x42):** {rollos_verde} rollos")
+    st.markdown(f"**Corte adicional verde:** {corte_verde}")
+    st.markdown(f"**Cinta Mayland:** {cinta_total:.1f} m")
+    st.markdown(f"**Baldes Mapei (10 kg):** {baldes_mapei} baldes")
+
+st.subheader("Relleno Estándar")
+st.markdown(f"- Arena Sílice: {arena_std} kg")
+st.markdown(f"- Caucho Granulado: {caucho_std} kg")
+
+st.subheader("Relleno FIFA")
+st.markdown(f"- Arena Sílice: {arena_fifa} kg")
+st.markdown(f"- Caucho Granulado: {caucho_fifa} kg")
+
+st.subheader("Arcos")
+st.markdown("2 unidades reglamentarias")
+
 # Visualización del campo
 def dibujar_cancha(largo, ancho, sobre_l, sobre_a):
     fig, ax = plt.subplots(figsize=(12, 6))
