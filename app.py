@@ -12,7 +12,7 @@ largo_total = largo_util + sobre_largo * 2
 ancho_total = ancho_util + sobre_ancho * 2
 
 st.set_page_config(page_title="Plano Cancha Fútbol 11", layout="wide")
-st.title("📐 Plano Cancha Fútbol 11 – Medidas y Sobrecancha")
+st.title("📐 Plano Cancha Fútbol")
 
 # Crear imagen
 fig, ax = plt.subplots(figsize=(14, 7))
