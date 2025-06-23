@@ -46,7 +46,7 @@ caucho_std = round(area_total * 7, 1)
 arena_fifa = round(area_total * 12, 1)
 caucho_fifa = round(area_total * 14, 1)
 
-# Visual ordenada
+# Resultados
 with st.container():
     st.header("🧾 Detalle de Cálculo por Ítem")
 
@@ -66,11 +66,9 @@ with st.container():
 
     with st.expander("🔗 Cinta Mayland"):
         st.markdown(f"- Total requerido: **{cinta_total:.1f} m**")
-        st.markdown("- Uniones a lo largo y ancho de los rollos incluidas")
 
     with st.expander("🧪 Pegamento Mapei"):
         st.markdown(f"- Baldes de 10 kg requeridos: **{baldes_mapei} baldes**")
-        st.markdown("- Cada balde rinde 20 m lineales")
 
     with st.expander("🌋 Relleno Estándar"):
         st.markdown(f"- Arena Sílice: **{arena_std} kg**")
@@ -83,19 +81,46 @@ with st.container():
     with st.expander("🥅 Arcos"):
         st.markdown("- **2 unidades reglamentarias** incluidas por defecto")
 
-# Visualización gráfica
-def dibujar_cancha(largo, ancho, sobre_l, sobre_a):
-    fig, ax = plt.subplots(figsize=(12, 6))
-    ax.set_xlim(0, largo)
-    ax.set_ylim(0, ancho)
-    cancha_total = patches.Rectangle((0, 0), largo, ancho, linewidth=1.5, edgecolor='black', facecolor='lightgreen')
-    ax.add_patch(cancha_total)
-    cancha_util = patches.Rectangle((sobre_l, sobre_a), largo - 2 * sobre_l, ancho - 2 * sobre_a, linewidth=2, edgecolor='white', facecolor='none', linestyle='--')
-    ax.add_patch(cancha_util)
-    ax.set_title("Visualización de la Cancha")
-    ax.set_aspect('equal')
-    ax.axis('off')
-    st.pyplot(fig)
+# Visualización
+st.header("📐 Vista Esquemática con Líneas Reglamentarias")
 
-st.header("📐 Vista de Dimensiones")
-dibujar_cancha(largo_total, ancho_total, sobre_largo, sobre_ancho)
+fig, ax = plt.subplots(figsize=(14, 7))
+ax.set_xlim(0, largo_total)
+ax.set_ylim(0, ancho_total)
+
+# Cancha total
+ax.add_patch(patches.Rectangle((0, 0), largo_total, ancho_total, linewidth=2, edgecolor='black', facecolor='lightgreen'))
+
+# Cancha útil
+ax.add_patch(patches.Rectangle((sobre_largo, sobre_ancho), largo_util, ancho_util, linewidth=2.5, edgecolor='white', facecolor='none', linestyle='--'))
+
+# Línea de medio campo
+ax.plot([sobre_largo + largo_util / 2, sobre_largo + largo_util / 2], [sobre_ancho, sobre_ancho + ancho_util], color='white', linewidth=2)
+
+# Círculo central y punto
+circle = plt.Circle((sobre_largo + largo_util / 2, sobre_ancho + ancho_util / 2), 9.15, color='white', fill=False, linewidth=2)
+ax.add_patch(circle)
+ax.plot(sobre_largo + largo_util / 2, sobre_ancho + ancho_util / 2, 'wo', markersize=3)
+
+# Área grande
+for x_start in [sobre_largo, sobre_largo + largo_util - 16.5]:
+    ax.add_patch(patches.Rectangle((x_start, sobre_ancho + (ancho_util - 40.3) / 2), 16.5, 40.3, linewidth=2, edgecolor='white', facecolor='none'))
+
+# Área chica
+for x_start in [sobre_largo, sobre_largo + largo_util - 5.5]:
+    ax.add_patch(patches.Rectangle((x_start, sobre_ancho + (ancho_util - 18.32) / 2), 5.5, 18.32, linewidth=2, edgecolor='white', facecolor='none'))
+
+# Puntos penales
+penal_distance = 11
+ax.plot(sobre_largo + penal_distance, sobre_ancho + ancho_util / 2, 'wo', markersize=3)
+ax.plot(sobre_largo + largo_util - penal_distance, sobre_ancho + ancho_util / 2, 'wo', markersize=3)
+
+# Medidas
+ax.text(largo_total / 2, -2, f"Largo total: {largo_total} m", ha='center', va='top', fontsize=10)
+ax.text(-2, ancho_total / 2, f"Ancho total: {ancho_total} m", ha='left', va='center', fontsize=10, rotation=90)
+ax.text(sobre_largo + largo_util / 2, ancho_total - 1, f"Largo útil: {largo_util} m", ha='center', va='bottom', fontsize=10, color='white')
+ax.text(1, sobre_ancho + ancho_util / 2, f"Ancho útil: {ancho_util} m", ha='left', va='center', fontsize=10, color='white', rotation=90)
+
+ax.set_aspect('equal')
+ax.axis('off')
+st.pyplot(fig)
