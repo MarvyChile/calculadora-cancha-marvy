@@ -58,22 +58,21 @@ with st.container():
     st.markdown(f"**Relleno FIFA:** Arena Sílice {arena_fifa} kg, Caucho {caucho_fifa} kg")
     st.markdown("**Arcos:** 2 unidades reglamentarias")
 
+
 # Visualización detallada
 st.header("📐 Visualización reglamentaria de la cancha")
 
 fig, ax = plt.subplots(figsize=(14, 7))
 ax.set_xlim(-10, largo_total + 10)
 ax.set_ylim(-10, ancho_total + 10)
-ax.set_xlim(0, largo_total)
-ax.set_ylim(0, ancho_total)
 
-# Cancha completa
+# Cancha total
 ax.add_patch(patches.Rectangle((0, 0), largo_total, ancho_total, linewidth=2, edgecolor='black', facecolor='lightgreen'))
 
 # Cancha útil
 ax.add_patch(patches.Rectangle((sobre_largo, sobre_ancho), largo_util, ancho_util, linewidth=2, edgecolor='white', facecolor='none', linestyle='--'))
 
-# Línea de medio campo
+# Línea media
 ax.plot([sobre_largo + largo_util / 2]*2, [sobre_ancho, sobre_ancho + ancho_util], color='white', linewidth=2)
 
 # Círculo central y punto
@@ -81,24 +80,25 @@ circle = plt.Circle((sobre_largo + largo_util / 2, sobre_ancho + ancho_util / 2)
 ax.add_patch(circle)
 ax.plot(sobre_largo + largo_util / 2, sobre_ancho + ancho_util / 2, 'wo', markersize=4)
 
-# Áreas grandes
-for x_start in [sobre_largo, sobre_largo + largo_util - 16.5]:
-    ax.add_patch(patches.Rectangle((x_start, sobre_ancho + (ancho_util - 40.3)/2), 16.5, 40.3, linewidth=2, edgecolor='white', facecolor='none'))
-
-# Áreas chicas
-for x_start in [sobre_largo, sobre_largo + largo_util - 5.5]:
-    ax.add_patch(patches.Rectangle((x_start, sobre_ancho + (ancho_util - 18.32)/2), 5.5, 18.32, linewidth=2, edgecolor='white', facecolor='none'))
+# Áreas grandes y chicas
+for x in [sobre_largo, sobre_largo + largo_util - 16.5]:
+    ax.add_patch(patches.Rectangle((x, sobre_ancho + (ancho_util - 40.3)/2), 16.5, 40.3, linewidth=2, edgecolor='white', facecolor='none'))
+for x in [sobre_largo, sobre_largo + largo_util - 5.5]:
+    ax.add_patch(patches.Rectangle((x, sobre_ancho + (ancho_util - 18.32)/2), 5.5, 18.32, linewidth=2, edgecolor='white', facecolor='none'))
 
 # Puntos penales
 ax.plot(sobre_largo + 11, sobre_ancho + ancho_util / 2, 'wo', markersize=3)
 ax.plot(sobre_largo + largo_util - 11, sobre_ancho + ancho_util / 2, 'wo', markersize=3)
 
-# Medidas
-ax.text(largo_total / 2, ancho_total + 4, f"LARGO TOTAL: {largo_total} m", ha='center', fontsize=11, weight='bold'), ha='center', fontsize=10)
-ax.text(largo_total + 4, ancho_total / 2, f"ANCHO TOTAL: {ancho_total} m", va='center', rotation=270, fontsize=11, weight='bold'), va='center', rotation=90, fontsize=10)
-ax.text(largo_total / 2, -6, f"Largo útil: {largo_util} m", ha='center', fontsize=10, color='black')
-ax.text(-7, ancho_total / 2, f"Ancho útil: {ancho_util} m", va='center', rotation=90, fontsize=10, color='black')
+# Medidas y etiquetas fuera del campo
+ax.text(largo_total / 2, ancho_total + 4, f"LARGO TOTAL: {largo_total} m", ha='center', fontsize=11, weight='bold')
+ax.text(largo_total + 4, ancho_total / 2, f"ANCHO TOTAL: {ancho_total} m", va='center', rotation=270, fontsize=11, weight='bold')
+ax.text(largo_total / 2, -6, f"LARGO ÚTIL: {largo_util} m", ha='center', fontsize=10, color='black')
+ax.text(-7, ancho_total / 2, f"ANCHO ÚTIL: {ancho_util} m", va='center', rotation=90, fontsize=10, color='black')
+ax.text(largo_total / 2, ancho_total + 8, f"SOBRECANCHA LARGO: {sobre_largo * 2} m", ha='center', fontsize=10, style='italic')
+ax.text(largo_total + 8, ancho_total / 2, f"SOBRECANCHA ANCHO: {sobre_ancho * 2} m", va='center', rotation=270, fontsize=10, style='italic')
 
+ax.set_title("Plano Reglamentario Cancha Fútbol 11 – Áreas y Medidas", fontsize=14, weight='bold')
 ax.set_aspect('equal')
 ax.axis('off')
 st.pyplot(fig)
