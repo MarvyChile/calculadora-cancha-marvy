@@ -59,6 +59,7 @@ st.markdown(f"**Relleno FIFA:** Arena Sílice {arena_fifa} kg, Caucho {caucho_fi
 st.markdown("**Arcos:** 2 unidades reglamentarias")
 
 # Visualización final con medidas, sin título
+# Visualización de la Cancha con Medidas
 st.header("📐 Visualización de la Cancha con Medidas")
 
 fig, ax = plt.subplots(figsize=(14, 7))
