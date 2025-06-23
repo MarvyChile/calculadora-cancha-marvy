@@ -53,7 +53,6 @@ ax.text(-8, ancho_total / 2, f"ANCHO CANCHA: {ancho_util} m", va='center', rotat
 ax.text(largo_total / 2, ancho_total + 9, f"SOBRECANCHA LARGO: {sobre_largo * 2} m", ha='center', fontsize=10, style='italic')
 ax.text(largo_total + 10, ancho_total / 2, f"SOBRECANCHA ANCHO: {sobre_ancho * 2} m", va='center', rotation=270, fontsize=10, style='italic')
 
-ax.set_title("Vista Reglamentaria de la Cancha con Medidas", fontsize=14, weight='bold')
 ax.set_aspect('equal')
 ax.axis('off')
 st.pyplot(fig)
