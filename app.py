@@ -111,7 +111,7 @@ def dibujar_cancha_reglamentaria():
     ax.text(-5, ancho_total / 2, f"Ancho cancha útil: {ancho_util} m", ha='left', va='center', fontsize=10, rotation=90)
     ax.text(-9, ancho_total / 2, f"Ancho con sobrecancha: {ancho_total} m", ha='left', va='center', fontsize=10, rotation=90)
 
-    ax.set_title("Vista esquemática reglamentaria de la cancha", fontsize=14)
+    # ax.set_title("Vista esquemática reglamentaria de la cancha", fontsize=14)
     ax.set_aspect('equal')
     ax.axis('off')
     fig.tight_layout()
