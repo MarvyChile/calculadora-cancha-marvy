@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 
 st.set_page_config(page_title="Calculadora Cancha Fútbol 11", layout="wide")
-st.title("⚽ Calculadora de Materiales – Cancha Fútbol 11")
+st.title("⚽ Calculadora de Materiales – Cancha Fútbol V1")
 
 # Entradas
 st.sidebar.header("📏 Medidas de la Cancha")
