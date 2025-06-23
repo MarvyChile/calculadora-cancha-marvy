@@ -60,6 +60,8 @@ st.markdown("**Arcos:** 2 unidades reglamentarias")
 
 # Visualización final con medidas, sin título
 # Visualización de la Cancha con Medidas
+
+# Visualización de la Cancha con Medidas
 st.header("📐 Visualización de la Cancha con Medidas")
 
 fig, ax = plt.subplots(figsize=(14, 7))
@@ -70,7 +72,7 @@ ax.set_ylim(-10, ancho_total + 10)
 ax.add_patch(patches.Rectangle((0, 0), largo_total, ancho_total, linewidth=2, edgecolor='black', facecolor='lightgreen'))
 ax.add_patch(patches.Rectangle((sobre_largo, sobre_ancho), largo_util, ancho_util, linewidth=2, edgecolor='white', facecolor='none', linestyle='--'))
 
-# Línea media, círculo, áreas y puntos penales
+# Línea media, círculo central, áreas y puntos penales
 ax.plot([sobre_largo + largo_util / 2]*2, [sobre_ancho, sobre_ancho + ancho_util], color='white', linewidth=2)
 circle = plt.Circle((sobre_largo + largo_util / 2, sobre_ancho + ancho_util / 2), 9.15, color='white', fill=False, linewidth=2)
 ax.add_patch(circle)
@@ -84,7 +86,7 @@ for x in [sobre_largo, sobre_largo + largo_util - 5.5]:
 ax.plot(sobre_largo + 11, sobre_ancho + ancho_util / 2, 'wo', markersize=3)
 ax.plot(sobre_largo + largo_util - 11, sobre_ancho + ancho_util / 2, 'wo', markersize=3)
 
-# Etiquetas fuera del campo
+# Medidas visibles
 ax.text(largo_total / 2, ancho_total + 5, f"LARGO CON SOBRECANCHA: {largo_total} m", ha='center', fontsize=11, weight='bold')
 ax.text(largo_total / 2, -7, f"LARGO CANCHA: {largo_util} m", ha='center', fontsize=10)
 ax.text(largo_total + 6, ancho_total / 2, f"ANCHO CON SOBRECANCHA: {ancho_total} m", va='center', rotation=270, fontsize=11, weight='bold')
