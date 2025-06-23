@@ -94,8 +94,8 @@ ax.plot(sobre_largo + largo_util - 11, sobre_ancho + ancho_util / 2, 'wo', marke
 # Medidas
 ax.text(largo_total / 2, -2, f"Largo total: {largo_total} m", ha='center', fontsize=10)
 ax.text(-2, ancho_total / 2, f"Ancho total: {ancho_total} m", va='center', rotation=90, fontsize=10)
-ax.text(sobre_largo + largo_util / 2, ancho_total - 1, f"Largo útil: {largo_util} m", ha='center', fontsize=10, color='white')
-ax.text(1, sobre_ancho + ancho_util / 2, f"Ancho útil: {ancho_util} m", va='center', rotation=90, fontsize=10, color='white')
+ax.text(sobre_largo + largo_util / 2, ancho_total + 1.5, f"Largo útil: {largo_util} m", ha='center', fontsize=10, color='black')
+ax.text(-6, sobre_ancho + ancho_util / 2, f"Ancho útil: {ancho_util} m", va='center', rotation=90, fontsize=10, color='black')
 
 ax.set_aspect('equal')
 ax.axis('off')
