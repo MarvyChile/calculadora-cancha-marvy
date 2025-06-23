@@ -81,7 +81,7 @@ with st.container():
     with st.expander("🥅 Arcos"):
         st.markdown("- **2 unidades reglamentarias** incluidas por defecto")
 
-# Vista gráfica con líneas reglamentarias
+# Vista gráfica con etiquetas corregidas
 st.header("📐 Vista Esquemática de la Cancha")
 
 def dibujar_cancha_reglamentaria():
@@ -105,10 +105,11 @@ def dibujar_cancha_reglamentaria():
     ax.plot(sobre_largo + 11, sobre_ancho + ancho_util / 2, 'wo')
     ax.plot(sobre_largo + largo_util - 11, sobre_ancho + ancho_util / 2, 'wo')
 
-    ax.text(largo_total / 2, -2, f"Largo total: {largo_total} m", ha='center', va='top', fontsize=10)
-    ax.text(-2, ancho_total / 2, f"Ancho total: {ancho_total} m", ha='left', va='center', fontsize=10, rotation=90)
-    ax.text(sobre_largo + largo_util / 2, ancho_total - 1, f"Largo útil: {largo_util} m", ha='center', va='bottom', fontsize=10, color='white')
-    ax.text(1, sobre_ancho + ancho_util / 2, f"Ancho útil: {ancho_util} m", ha='left', va='center', fontsize=10, color='white', rotation=90)
+    ax.text(largo_total / 2, -3, f"Largo cancha útil: {largo_util} m", ha='center', va='top', fontsize=10)
+    ax.text(largo_total / 2, -6, f"Largo con sobrecancha: {largo_total} m", ha='center', va='top', fontsize=10)
+
+    ax.text(-5, ancho_total / 2, f"Ancho cancha útil: {ancho_util} m", ha='left', va='center', fontsize=10, rotation=90)
+    ax.text(-9, ancho_total / 2, f"Ancho con sobrecancha: {ancho_total} m", ha='left', va='center', fontsize=10, rotation=90)
 
     ax.set_title("Vista esquemática reglamentaria de la cancha", fontsize=14)
     ax.set_aspect('equal')
