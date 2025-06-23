@@ -20,77 +20,100 @@ ancho_total = ancho_util + sobre_ancho * 2
 area_total = largo_total * ancho_total
 area_util = largo_util * ancho_util
 
+# Pasto blanco
 pasto_blanco = round(area_util * 0.014, 1)
 rollos_blanco = math.floor(pasto_blanco / 84)
-corte_blanco = f"{pasto_blanco - (rollos_blanco * 84):.1f} m²" if pasto_blanco > 84 else "No requiere"
+resto_blanco = pasto_blanco - (rollos_blanco * 84)
+corte_blanco = f"{resto_blanco:.1f} m²" if resto_blanco > 0 else "No requiere"
 
+# Pasto verde
 pasto_verde = area_total - pasto_blanco
 rollos_verde = math.floor(pasto_verde / 168)
-corte_verde = f"{pasto_verde - (rollos_verde * 168):.1f} m²" if pasto_verde > 168 else "No requiere"
+resto_verde = pasto_verde - (rollos_verde * 168)
+corte_verde = f"{resto_verde:.1f} m²" if resto_verde > 0 else "No requiere"
 
+# Cinta y Pegamento
 uniones_largo = math.floor(ancho_total / 4) - 1
 uniones_ancho = math.floor(largo_total / 42) - 1
-cinta_total = uniones_largo * largo_total + uniones_ancho * ancho_total
+cinta_largo = uniones_largo * largo_total
+cinta_ancho = uniones_ancho * ancho_total
+cinta_total = cinta_largo + cinta_ancho
 baldes_mapei = math.ceil(cinta_total / 20)
 
+# Relleno
 arena_std = round(area_total * 32, 1)
 caucho_std = round(area_total * 7, 1)
 arena_fifa = round(area_total * 12, 1)
 caucho_fifa = round(area_total * 14, 1)
 
-# Resultados
-st.header("🧾 Resumen de Cálculo de Materiales")
-st.markdown(f"**Área útil:** {area_util:.1f} m²")
-st.markdown(f"**Área total:** {area_total:.1f} m²")
-st.markdown(f"**Pasto blanco:** {pasto_blanco:.1f} m² → {rollos_blanco} rollos + {corte_blanco}")
-st.markdown(f"**Pasto verde:** {pasto_verde:.1f} m² → {rollos_verde} rollos + {corte_verde}")
-st.markdown(f"**Cinta Mayland:** {cinta_total:.1f} m → **Baldes Mapei:** {baldes_mapei}")
-st.markdown(f"**Relleno estándar:** Arena {arena_std} kg | Caucho {caucho_std} kg")
-st.markdown(f"**Relleno FIFA:** Arena {arena_fifa} kg | Caucho {caucho_fifa} kg")
-st.markdown("**Arcos:** 2 unidades reglamentarias")
+# Presentación visual
+with st.container():
+    st.header("🧾 Detalle de Cálculo por Ítem")
 
-# Visualización
-st.header("📐 Plano Reglamentario Cancha Fútbol 11")
+    with st.expander("📌 Área Total y Útil"):
+        st.markdown(f"- Área útil (sin sobrecancha): **{area_util:.1f} m²**")
+        st.markdown(f"- Área total (con sobrecancha): **{area_total:.1f} m²**")
 
-fig, ax = plt.subplots(figsize=(14, 7))
-ax.set_xlim(-10, largo_total + 10)
-ax.set_ylim(-10, ancho_total + 10)
+    with st.expander("🟦 Pasto Blanco – Líneas de Cancha"):
+        st.markdown(f"- Total requerido: **{pasto_blanco:.1f} m²**")
+        st.markdown(f"- Rollos de 2x42 m (84 m²): **{rollos_blanco}**")
+        st.markdown(f"- Corte adicional: **{corte_blanco}**")
 
-# Cancha total
-ax.add_patch(patches.Rectangle((0, 0), largo_total, ancho_total, linewidth=2, edgecolor='black', facecolor='lightgreen'))
+    with st.expander("🟩 Pasto Verde – Área Resto de la Cancha"):
+        st.markdown(f"- Total requerido: **{pasto_verde:.1f} m²**")
+        st.markdown(f"- Rollos de 4x42 m (168 m²): **{rollos_verde}**")
+        st.markdown(f"- Corte adicional: **{corte_verde}**")
 
-# Cancha útil
-ax.add_patch(patches.Rectangle((sobre_largo, sobre_ancho), largo_util, ancho_util, linewidth=2, edgecolor='white', facecolor='none', linestyle='--'))
+    with st.expander("🔗 Cinta Mayland"):
+        st.markdown(f"- Total requerido: **{cinta_total:.1f} m**")
 
-# Línea media
-ax.plot([sobre_largo + largo_util / 2]*2, [sobre_ancho, sobre_ancho + ancho_util], color='white', linewidth=2)
+    with st.expander("🧪 Pegamento Mapei"):
+        st.markdown(f"- Baldes de 10 kg requeridos: **{baldes_mapei} baldes**")
 
-# Círculo central y punto
-circle = plt.Circle((sobre_largo + largo_util / 2, sobre_ancho + ancho_util / 2), 9.15, color='white', fill=False, linewidth=2)
-ax.add_patch(circle)
-ax.plot(sobre_largo + largo_util / 2, sobre_ancho + ancho_util / 2, 'wo', markersize=4)
+    with st.expander("🌋 Relleno Estándar"):
+        st.markdown(f"- Arena Sílice: **{arena_std} kg**")
+        st.markdown(f"- Caucho Granulado: **{caucho_std} kg**")
 
-# Áreas grandes y chicas
-for x in [sobre_largo, sobre_largo + largo_util - 16.5]:
-    ax.add_patch(patches.Rectangle((x, sobre_ancho + (ancho_util - 40.3)/2), 16.5, 40.3, linewidth=2, edgecolor='white', facecolor='none'))
-for x in [sobre_largo, sobre_largo + largo_util - 5.5]:
-    ax.add_patch(patches.Rectangle((x, sobre_ancho + (ancho_util - 18.32)/2), 5.5, 18.32, linewidth=2, edgecolor='white', facecolor='none'))
+    with st.expander("🌋 Relleno FIFA"):
+        st.markdown(f"- Arena Sílice: **{arena_fifa} kg**")
+        st.markdown(f"- Caucho Granulado: **{caucho_fifa} kg**")
 
-# Puntos penales
-ax.plot(sobre_largo + 11, sobre_ancho + ancho_util / 2, 'wo', markersize=3)
-ax.plot(sobre_largo + largo_util - 11, sobre_ancho + ancho_util / 2, 'wo', markersize=3)
+    with st.expander("🥅 Arcos"):
+        st.markdown("- **2 unidades reglamentarias** incluidas por defecto")
 
-# Textos externos
-ax.text(largo_total / 2, ancho_total + 4, f"LARGO TOTAL: {largo_total} m", ha='center', fontsize=11, weight='bold')
-ax.text(largo_total + 4, ancho_total / 2, f"ANCHO TOTAL: {ancho_total} m", va='center', rotation=270, fontsize=11, weight='bold')
+# Vista gráfica con líneas reglamentarias
+st.header("📐 Vista Esquemática de la Cancha")
 
-ax.text(largo_total / 2, -6, f"LARGO ÚTIL: {largo_util} m", ha='center', fontsize=10, color='black')
-ax.text(-7, ancho_total / 2, f"ANCHO ÚTIL: {ancho_util} m", va='center', rotation=90, fontsize=10, color='black')
+def dibujar_cancha_reglamentaria():
+    fig, ax = plt.subplots(figsize=(12, 6))
+    ax.set_xlim(0, largo_total)
+    ax.set_ylim(0, ancho_total)
 
-ax.text(largo_total / 2, ancho_total + 8, f"SOBRECANCHA LARGO: {sobre_largo * 2} m", ha='center', fontsize=10, style='italic')
-ax.text(largo_total + 8, ancho_total / 2, f"SOBRECANCHA ANCHO: {sobre_ancho * 2} m", va='center', rotation=270, fontsize=10, style='italic')
+    ax.add_patch(patches.Rectangle((0, 0), largo_total, ancho_total, linewidth=2, edgecolor='black', facecolor='lightgreen'))
+    ax.add_patch(patches.Rectangle((sobre_largo, sobre_ancho), largo_util, ancho_util, linewidth=2.5, edgecolor='white', facecolor='none', linestyle='--'))
 
-ax.set_title("Plano Reglamentario Cancha Fútbol 11 – Áreas y Medidas", fontsize=14, weight='bold')
-ax.set_aspect('equal')
-ax.axis('off')
-st.pyplot(fig)
+    ax.plot([sobre_largo + largo_util / 2, sobre_largo + largo_util / 2], [sobre_ancho, sobre_ancho + ancho_util], color='white', linewidth=2)
+    circle = plt.Circle((sobre_largo + largo_util / 2, sobre_ancho + ancho_util / 2), 9.15, color='white', fill=False, linewidth=2)
+    ax.add_patch(circle)
+
+    area_largo = 16.5
+    area_ancho = 40.3
+
+    ax.add_patch(patches.Rectangle((sobre_largo, sobre_ancho + (ancho_util - area_ancho) / 2), area_largo, area_ancho, linewidth=2, edgecolor='white', facecolor='none'))
+    ax.add_patch(patches.Rectangle((sobre_largo + largo_util - area_largo, sobre_ancho + (ancho_util - area_ancho) / 2), area_largo, area_ancho, linewidth=2, edgecolor='white', facecolor='none'))
+
+    ax.plot(sobre_largo + 11, sobre_ancho + ancho_util / 2, 'wo')
+    ax.plot(sobre_largo + largo_util - 11, sobre_ancho + ancho_util / 2, 'wo')
+
+    ax.text(largo_total / 2, -2, f"Largo total: {largo_total} m", ha='center', va='top', fontsize=10)
+    ax.text(-2, ancho_total / 2, f"Ancho total: {ancho_total} m", ha='left', va='center', fontsize=10, rotation=90)
+    ax.text(sobre_largo + largo_util / 2, ancho_total - 1, f"Largo útil: {largo_util} m", ha='center', va='bottom', fontsize=10, color='white')
+    ax.text(1, sobre_ancho + ancho_util / 2, f"Ancho útil: {ancho_util} m", ha='left', va='center', fontsize=10, color='white', rotation=90)
+
+    ax.set_title("Vista esquemática reglamentaria de la cancha", fontsize=14)
+    ax.set_aspect('equal')
+    ax.axis('off')
+    fig.tight_layout()
+    st.pyplot(fig)
+
+dibujar_cancha_reglamentaria()
