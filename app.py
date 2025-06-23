@@ -62,6 +62,8 @@ with st.container():
 st.header("📐 Visualización reglamentaria de la cancha")
 
 fig, ax = plt.subplots(figsize=(14, 7))
+ax.set_xlim(-10, largo_total + 10)
+ax.set_ylim(-10, ancho_total + 10)
 ax.set_xlim(0, largo_total)
 ax.set_ylim(0, ancho_total)
 
@@ -92,10 +94,10 @@ ax.plot(sobre_largo + 11, sobre_ancho + ancho_util / 2, 'wo', markersize=3)
 ax.plot(sobre_largo + largo_util - 11, sobre_ancho + ancho_util / 2, 'wo', markersize=3)
 
 # Medidas
-ax.text(largo_total / 2, -2, f"Largo total: {largo_total} m", ha='center', fontsize=10)
-ax.text(-2, ancho_total / 2, f"Ancho total: {ancho_total} m", va='center', rotation=90, fontsize=10)
-ax.text(sobre_largo + largo_util / 2, ancho_total + 1.5, f"Largo útil: {largo_util} m", ha='center', fontsize=10, color='black')
-ax.text(-6, sobre_ancho + ancho_util / 2, f"Ancho útil: {ancho_util} m", va='center', rotation=90, fontsize=10, color='black')
+ax.text(largo_total / 2, ancho_total + 4, f"LARGO TOTAL: {largo_total} m", ha='center', fontsize=11, weight='bold'), ha='center', fontsize=10)
+ax.text(largo_total + 4, ancho_total / 2, f"ANCHO TOTAL: {ancho_total} m", va='center', rotation=270, fontsize=11, weight='bold'), va='center', rotation=90, fontsize=10)
+ax.text(largo_total / 2, -6, f"Largo útil: {largo_util} m", ha='center', fontsize=10, color='black')
+ax.text(-7, ancho_total / 2, f"Ancho útil: {ancho_util} m", va='center', rotation=90, fontsize=10, color='black')
 
 ax.set_aspect('equal')
 ax.axis('off')
